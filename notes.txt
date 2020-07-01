@@ -1,0 +1,13 @@
+The following notes are derived from cstack.github.io/db_tutorial.
+
+The general construction of a database comes in the following form:
+
+   Tokenizer
+-> Parser
+-> CodeGenerator
+-> VirtualMachine
+-> B-Tree
+-> Pager
+-> OSInterface
+
+Part One: Making a simple REPL

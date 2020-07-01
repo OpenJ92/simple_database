@@ -11,3 +11,12 @@ The general construction of a database comes in the following form:
 -> OSInterface
 
 Part One: Making a simple REPL
+-- We defined a REPL function which initializes an InputBuffer
+   with a char* to a stream and the buffer and input length. we then 
+   enter a while loop that prints a unparameterized default output to
+   the console and awaits user input via the read_input function. Upon
+   updating the state of the InputBuffer, we carry out a string compare.
+   
+Part Two: World's simplest SQL compiler and Virtual Machine.
+-- Refactor of REPL function to identify repl commands and eventually 
+   SQL commands.

@@ -9,16 +9,39 @@ void REPL(void)
 		print_prompt();
 		read_input(input_buffer);
 
-		if (strcmp(input_buffer->buffer, ".exit") == 0)
+		// meta-command dispatcher -- perhaps these should be placed into seperate dispatch files.
+		if (input_buffer->buffer[0] == ".")
 		{
-			close_input_buffer(input_buffer);
-			exit(EXIT_SUCCESS);
+			switch (do_meta_command(input_buffer))
+			{
+				case (META_COMMAND_SUCCESS)
+				{
+					continue;
+				}
+				case (META_COMMAND_UNRECOGNIZED_COMMAND)
+				{
+					printf("Unrecognized command '%s'\n", input_buffer->buffer);
+					continue;
+				}
+			}
 		}
-		else
+
+		// statement processor -- perhaps these should be placed into seperate dispatch files.
+		Statement statement;
+		switch (prepare_statement(input_buffer, &statement))
 		{
-			printf("Unrecognized command '%s'.\n", input_buffer->buffer);
+			case (PREPARE_SUCCESS)
+			{
+				continue;
+			}
+			case (PREPARE_UNRECOGNIZED_STATEMENT)
+			{
+				printf("Unrecognized keyword at the start of '%s'\n", input_buffer->buffer);
+				continue;
+			}
 		}
-	}
+
+		execute_command(&input_buffer); printf("Executed.\n");
 }
 
 

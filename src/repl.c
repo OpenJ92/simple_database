@@ -1,4 +1,6 @@
 #include "repl.h"
+#include "metacommand.h"
+#include "statement.h"
 
 void REPL(void)
 {
@@ -10,19 +12,15 @@ void REPL(void)
 		read_input(input_buffer);
 
 		// meta-command dispatcher -- perhaps these should be placed into seperate dispatch files.
-		if (input_buffer->buffer[0] == ".")
+		if (input_buffer->buffer[0] == '.' )
 		{
 			switch (do_meta_command(input_buffer))
 			{
-				case (META_COMMAND_SUCCESS)
-				{
+				case (META_COMMAND_SUCCESS):
 					continue;
-				}
-				case (META_COMMAND_UNRECOGNIZED_COMMAND)
-				{
+				case (META_COMMAND_UNRECOGNIZED_COMMAND):
 					printf("Unrecognized command '%s'\n", input_buffer->buffer);
 					continue;
-				}
 			}
 		}
 
@@ -30,18 +28,15 @@ void REPL(void)
 		Statement statement;
 		switch (prepare_statement(input_buffer, &statement))
 		{
-			case (PREPARE_SUCCESS)
-			{
-				continue;
-			}
-			case (PREPARE_UNRECOGNIZED_STATEMENT)
-			{
+			case (PREPARE_SUCCESS):
+		  		execute_statement(&statement); printf("Executed.\n");
+				break;	
+			case (PREPARE_UNRECOGNIZED_STATEMENT):
 				printf("Unrecognized keyword at the start of '%s'\n", input_buffer->buffer);
 				continue;
-			}
 		}
 
-		execute_command(&input_buffer); printf("Executed.\n");
+	}
 }
 
 

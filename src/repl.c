@@ -1,4 +1,5 @@
 #include "repl.h"
+
 #include "metacommand.h"
 #include "statement.h"
 
@@ -11,31 +12,21 @@ void REPL(void)
 		print_prompt();
 		read_input(input_buffer);
 
+		// We're now running into circular include problems and the dispatcher should be defined elsewhere
+		// so that we have no dependancies on metacommand and statement definitions in our repl file. 
+		// Perhaps we should move these switch statements into thier respective files.
+		//
 		// meta-command dispatcher -- perhaps these should be placed into seperate dispatch files.
 		if (input_buffer->buffer[0] == '.' )
 		{
-			switch (do_meta_command(input_buffer))
-			{
-				case (META_COMMAND_SUCCESS):
-					continue;
-				case (META_COMMAND_UNRECOGNIZED_COMMAND):
-					printf("Unrecognized command '%s'\n", input_buffer->buffer);
-					continue;
-			}
+			metacommand_dispatch(input_buffer);
+		}
+		else
+		{
+			statement_dispatch(input_buffer);
 		}
 
 		// statement processor -- perhaps these should be placed into seperate dispatch files.
-		Statement statement;
-		switch (prepare_statement(input_buffer, &statement))
-		{
-			case (PREPARE_SUCCESS):
-		  		execute_statement(&statement); printf("Executed.\n");
-				break;	
-			case (PREPARE_UNRECOGNIZED_STATEMENT):
-				printf("Unrecognized keyword at the start of '%s'\n", input_buffer->buffer);
-				continue;
-		}
-
 	}
 }
 

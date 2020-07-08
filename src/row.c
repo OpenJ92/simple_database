@@ -5,14 +5,18 @@
 
 void serialize_row(Row* source, void* destination)
 {
-	memcpy(destination + AID_OFFSET, &(source->id), AID_SIZE);
-	memcpy(destination + AUSERNAME_OFFSET, &(source->username), AUSERNAME_SIZE);
-	memcpy(destination + AEMAIL_OFFSET, &(source->email), AEMAIL_SIZE);
+	memcpy(destination + ID_OFFSET, &(source->id), ID_SIZE);
+	memcpy(destination + USERNAME_OFFSET, &(source->username), USERNAME_SIZE);
+	memcpy(destination + EMAIL_OFFSET, &(source->email), EMAIL_SIZE);
 }
 
 void deserialize_row(void* source, Row* destination)
 {
-	memcpy(&(destination->id), source + AID_OFFSET, AID_SIZE);
-	memcpy(&(destination->username), source + AUSERNAME_OFFSET, AUSERNAME_SIZE);
-	memcpy(&(destination->email), source + AEMAIL_OFFSET, AEMAIL_SIZE);
+	memcpy(&(destination->id), source + ID_OFFSET, ID_SIZE);
+	memcpy(&(destination->username), source + USERNAME_OFFSET, USERNAME_SIZE);
+	memcpy(&(destination->email), source + EMAIL_OFFSET, EMAIL_SIZE);
+}
+
+void print_row(Row* row)
+{
 }

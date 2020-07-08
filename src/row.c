@@ -2,7 +2,6 @@
 
 #include "row.h"
 
-
 void serialize_row(Row* source, void* destination)
 {
 	memcpy(destination + ID_OFFSET, &(source->id), ID_SIZE);
@@ -19,4 +18,5 @@ void deserialize_row(void* source, Row* destination)
 
 void print_row(Row* row)
 {
+	printf("(%u, %s, %s)\n", row->id, row->username, row->email);
 }

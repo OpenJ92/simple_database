@@ -4,9 +4,9 @@
 
 #include "metacommand.h"
 
-void metacommand_dispatch(InputBuffer* buffer)
+void metacommand_dispatch(InputBuffer* buffer, Table* table)
 {
-	switch (do_meta_command(buffer))
+	switch (do_meta_command(buffer, table))
 	{
 		case (META_COMMAND_SUCCESS):
 			break;
@@ -16,10 +16,12 @@ void metacommand_dispatch(InputBuffer* buffer)
 	}
 }
 
-MetaCommandResult do_meta_command(InputBuffer* input_buffer)
+MetaCommandResult do_meta_command(InputBuffer* input_buffer, Table* table)
 {
 	if (strcmp(input_buffer->buffer, ".exit") == 0)
 	{
+		close_input_buffer(input_buffer);
+		free_table(table);
 		printf("G'night!\n"); exit(EXIT_SUCCESS);
 	}
 	else

@@ -1,9 +1,10 @@
-#include <stdint.h>
-#include <stdlib.h>
-
 #ifndef TABLEHEADER
 #define TABLEHEADER
 
+#include <stdint.h>
+#include <stdlib.h>
+
+// table.c
 #include "row.h"
 
 #define TABLE_MAX_PAGES 100
@@ -18,5 +19,7 @@ typedef struct
 } Table;
 
 void* row_slot(Table* table, uint32_t row_num);
+Table* new_table(void);
+void free_table(Table* table);
 
 #endif

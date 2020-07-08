@@ -3,13 +3,13 @@
 
 #include "statement.h"
 
-void statement_dispatch(InputBuffer* input_buffer)
+void statement_dispatch(InputBuffer* input_buffer, Table* table)
 {
 	Statement statement;
 	switch (prepare_statement(input_buffer, &statement))
 	{
 		case (PREPARE_SUCCESS):
-			execute_statement(&statement); printf("Executed.\n");
+			execute_statement(&statement, table);
 			break;	
 		case (PREPARE_UNRECOGNIZED_STATEMENT):
 			printf(
@@ -31,7 +31,7 @@ PrepareResult prepare_statement(InputBuffer* input_buffer, Statement* statement)
 		int args_assigned = 
 		sscanf(
 			  input_buffer->buffer, 
-			  "inserted %d, %s, %s", 
+			  "insert %u %s %s", 
 			  &(statement->row_to_insert.id),
 			  statement->row_to_insert.username,
 			  statement->row_to_insert.email
@@ -66,15 +66,15 @@ ExecuteResult execute_select(Statement* statement, Table* table)
 	Row row;
 	for (uint32_t i = 0; i < table->num_rows; i++)
 	{
+		printf("%i, %i\n", i, table->num_rows);
 		deserialize_row(row_slot(table, i), &row);
+		print_row(&row);
 	}
-	print_row(&row);
 	return EXECUTE_SUCCESS;
 }
 
 ExecuteResult execute_statement(Statement* statement, Table* table)
 {
-	printf("statement execution: %i \n", statement->type);
 	switch (statement->type)
 	{
 		case (STATEMENT_INSERT):

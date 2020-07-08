@@ -1,6 +1,7 @@
 #ifndef STATEMENTHEADER
 #define STATEMENTHEADER
 
+// statement.c
 #include "repl.h"
 #include "row.h"
 #include "table.h"
@@ -34,6 +35,6 @@ PrepareResult prepare_statement(InputBuffer* input_buffer, Statement* statement)
 ExecuteResult execute_insert(Statement* statement, Table* table);
 ExecuteResult execute_select(Statement* statement, Table* table);
 ExecuteResult execute_statement(Statement* statement, Table* table);
-void statement_dispatch(InputBuffer* input_buffer);
+void statement_dispatch(InputBuffer* input_buffer, Table* table);
 
 #endif

@@ -4,9 +4,9 @@
 #include "statement.h"
 #include "table.h"
 
-void REPL(void)
+void REPL(char* filename)
 {
-	Table* table = new_table();
+	Table* table = db_open(filename);
 	InputBuffer* input_buffer = new_input_buffer();
 
 	while (true)

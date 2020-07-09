@@ -6,6 +6,7 @@
 
 // table.c
 #include "row.h"
+#include "pager.h"
 
 #define TABLE_MAX_PAGES 100
 static const uint32_t PAGE_SIZE = 4096; // representing 4 kilobytes
@@ -14,12 +15,12 @@ static const uint32_t TABLE_MAX_ROWS = ROWS_PER_PAGE * TABLE_MAX_PAGES;
 
 typedef struct
 {
+	Pager* pager;
 	uint32_t num_rows;
-	void* pages[TABLE_MAX_PAGES];
 } Table;
 
 void* row_slot(Table* table, uint32_t row_num);
-Table* new_table(void);
-void free_table(Table* table);
+Table* db_open(const char* filename);
+void db_close(Table* table);
 
 #endif

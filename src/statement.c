@@ -53,24 +53,17 @@ PrepareResult prepare_insert(InputBuffer* input_buffer, Statement* statement)
 	char* username = strtok(NULL, " ");
 	char* email = strtok(NULL, " ");
 
+	// check validity of insert statement
 	if (id_string == NULL | username == NULL | email == NULL)
-	{
-		return PREPARE_SYNTAX_ERROR;
-	}
+	{ return PREPARE_SYNTAX_ERROR; }
 
 	int id = atoi(id_string);
 	if (id < 0)
-	{
-		return PREPARE_NEGATIVE_ID;
-	}
+	{ return PREPARE_NEGATIVE_ID; }
 	if (strlen(username) > COLUMN_USERNAME_SIZE)
-	{
-		return PREPARE_STRING_TOO_LONG;
-	}
+	{ return PREPARE_STRING_TOO_LONG; }
 	if (strlen(email) > COLUMN_USERNAME_SIZE)
-	{
-		return PREPARE_STRING_TOO_LONG;
-	}
+	{ return PREPARE_STRING_TOO_LONG; }
 
 	statement->row_to_insert.id = id;
 	strcpy(statement->row_to_insert.username, username);
